@@ -160,17 +160,17 @@ Use the scoreboard function below to do the following:
   */
 
 function scoreboard(inningScore, inning, inningsPlayed){
-  var scoreboard = [];
-  var Home = 0, Away = 0;
+  var scoreboard = []; // Creating an empty array to push each inning's outcome to 
+  var Home = 0, Away = 0; // Initializing team scores to keep track after each inning
 
   for(let i = 0; i < inningsPlayed; i++){
-    let score = getInningScore(inning);
-    scoreboard.push(`Inning ${i+1}: Away ${score.Away} - Home ${score.Home}`);
-    Home += score.Home;
+    let score = getInningScore(inning); // Returns an object containing the scores for each inning
+    scoreboard.push(`Inning ${i+1}: Away ${score.Away} - Home ${score.Home}`); //Pushes a string with the inning's scores onto the array
+    Home += score.Home; // Keeps track of score totals
     Away += score.Away;
   }
 
-  if(Home === Away){
+  if(Home === Away){ // If statement determining if score is a tie or not
     scoreboard.push(`This game will require extra innings: Away ${Away} - Home ${Home}`);
   } else {
     scoreboard.push(`Final Score: Away ${Away} - Home ${Home}`);
