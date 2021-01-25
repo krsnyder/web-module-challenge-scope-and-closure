@@ -28,11 +28,19 @@ console.log(processFirstItem(['foo','bar'],function(str){return str+str}));
   Study the code for counter1 and counter2, then answer the questions below.
   
   1. What is the difference between counter1 and counter2?
+
+    Because counterMaker is invoked in the declaration of counter1, counter1 is the equal to the function that counterMaker returns. Counter1 is now it's own copy of that function and can be invoked. counter2 however simply returns the increment of count which is defined outside of the function.
   
   2. Which of the two uses a closure? How can you tell?
   
+    counter1 uses a closure because it declares the function counter inside of it's return, AND that returned function utilized a variable from the parent scope.
+
   3. In what scenario would the counter1 code be preferable? In what scenario would 
      counter2 be better?  
+     
+     In counter1, the variable 'count' is not accessible from outside of the function, however it is accessible to the inner function 'counter' even after the outer function has been popped off the call stack. This is preferable if you want to keep the initial variable private to the rest of your code but want to have a function that can access the variable.
+
+
 */
 
 // counter1 code
@@ -107,7 +115,7 @@ function getInningScore(callback) {
     Home: callback()
   };
   return score;
-};
+}
 
 
 /* ⚾️⚾️⚾️ Task 5: scoreboard() ⚾️⚾️⚾️
@@ -151,11 +159,25 @@ Use the scoreboard function below to do the following:
 ]  
   */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function scoreboard(inningScore, inning, inningsPlayed){
+  var scoreboard = [];
+  var Home = 0, Away = 0;
+
+  for(let i = 0; i < inningsPlayed; i++){
+    let score = getInningScore(inning);
+    scoreboard.push(`Inning ${i+1}: Away ${score.Away} - Home ${score.Home}`);
+    Home += score.Home;
+    Away += score.Away;
+  }
+
+  if(Home === Away){
+    scoreboard.push(`This game will require extra innings: Away ${Away} - Home ${Home}`);
+  } else {
+    scoreboard.push(`Final Score: Away ${Away} - Home ${Home}`);
+  }
+
+  return scoreboard;
 }
-
-
 
 
 /* 🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑 */
